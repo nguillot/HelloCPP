@@ -13,6 +13,19 @@ model {
 
     }
 
+    android.ndk {
+        moduleName = "HelloLib"
+        toolchain = "clang"
+        toolchainVersion = "3.5"
+        stl = "c++_shared"
+
+        ldLibs.add("atomic")
+        ldLibs.add("android")
+        ldLibs.add("log")
+
+        abiFilters.addAll(["armeabi-v7a"])//filtering ABIs to reduce the compile time
+    }
+
     android.buildTypes {
         release {
             minifyEnabled = false
@@ -24,5 +37,4 @@ model {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.1.1'
-    compile project(':nativelibrary')
 }
