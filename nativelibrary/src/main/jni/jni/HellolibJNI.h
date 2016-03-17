@@ -8,7 +8,7 @@ extern "C" {
 
 JNIEXPORT jstring JNICALL
 Java_nicolas_guillot_hellocpp_core_HelloLib_sayHello__JLjava_lang_String_2(JNIEnv *env, jclass type,
-                                                                           jlong nativeInstance,
+                                                                           jlong holderPtr,
                                                                            jstring name_);
 
 JNIEXPORT jlong JNICALL
@@ -17,7 +17,7 @@ Java_nicolas_guillot_hellocpp_core_HelloLib_createNativeInstance(JNIEnv *env, jc
 
 JNIEXPORT void JNICALL
 Java_nicolas_guillot_hellocpp_core_HelloLib_destroy(JNIEnv *env, jclass type,
-                                                    jlong nativeInstance);
+                                                    jlong holderPtr);
 
 #ifdef __cplusplus
 }
