@@ -1,19 +1,20 @@
 #include <jni.h>
 #include <memory>
 #include "HellolibJNI.h"
+#include "NativeHolder.h"
 
 JNIEXPORT jstring JNICALL
 Java_nicolas_guillot_hellocpp_core_HelloLib_sayHello__JLjava_lang_String_2(JNIEnv *env, jclass type,
-                                                                           jlong nativeInstance,
+                                                                           jlong holderPtr,
                                                                            jstring name_) {
-    auto *ptr = reinterpret_cast<Hellolib*>(static_cast<std::uintptr_t>(nativeInstance));
-    if(ptr == nullptr) {
+    auto holder = (NativeHolder *) holderPtr;
+    if(holder == nullptr) {
         std::u16string empty = u"";
         return helper->toJavaString(env, empty);
     }
+    auto nativeHelloLib = std::static_pointer_cast<Hellolib>(holder->helloLib);
 
-
-    std::u16string result = ptr->sayHello(helper->fromJavaString(env, name_));
+    std::u16string result = nativeHelloLib->sayHello(helper->fromJavaString(env, name_));
     jstring javaResult = helper->toJavaString(env, result);
 
     return javaResult;
@@ -23,17 +24,18 @@ JNIEXPORT jlong JNICALL
 Java_nicolas_guillot_hellocpp_core_HelloLib_createNativeInstance(JNIEnv *env, jclass type,
                                                                  jobject helloLib) {
 
-    auto nativeHelloLib = std::unique_ptr<Hellolib>();
+    auto nativeHelloLib = std::make_shared<Hellolib>();
 
-    jlong nativeInstanceHandle = reinterpret_cast<jlong>(nativeHelloLib.get());
-    return nativeInstanceHandle;
+    auto holder = new NativeHolder;
+    holder->helloLib = nativeHelloLib;
+
+    return (jlong) holder;
 }
 
 JNIEXPORT void JNICALL
 Java_nicolas_guillot_hellocpp_core_HelloLib_destroy(JNIEnv *env, jclass type,
-                                                    jlong nativeInstance) {
-
-    auto *ptr = reinterpret_cast<Hellolib*>(static_cast<std::uintptr_t>(nativeInstance));
-    if(ptr != nullptr)
-        delete(ptr);
+                                                    jlong holderPtr) {
+    auto holder = (NativeHolder *) holderPtr;
+    if(holder != nullptr)
+        delete(holder);
 }

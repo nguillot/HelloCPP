@@ -23,7 +23,7 @@ model {
         ldLibs.add("android")
         ldLibs.add("log")
 
-        abiFilters.addAll(["armeabi-v7a"])//filtering ABIs to reduce the compile time
+        abiFilters.addAll(["arm64-v8a"]) //["armeabi", "armeabi-v7a", "x86", "arm64-v8a"]) //filtering ABIs to reduce the compile time
     }
 
     android.buildTypes {
