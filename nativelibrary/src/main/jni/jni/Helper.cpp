@@ -2,7 +2,7 @@
 // Created by Nicolas Guillot on 07/01/2016.
 //
 
-#include "../public/Helper.h"
+#include "Helper.h"
 
 // Global native helper instance
 Helper* helper = nullptr;
