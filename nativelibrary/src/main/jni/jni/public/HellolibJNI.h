@@ -1,6 +1,6 @@
 #include <jni.h>
 #include "Helper.h"
-#include "../public/Hellolib.h"
+#include "../../cpp/public/Hellolib.h"
 
 #ifdef __cplusplus
 extern "C" {

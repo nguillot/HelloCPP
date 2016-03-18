@@ -1,7 +1,7 @@
 #include <jni.h>
 #include <memory>
-#include "HellolibJNI.h"
-#include "NativeHolder.h"
+#include "../public/HellolibJNI.h"
+#include "../public/NativeHolder.h"
 
 JNIEXPORT jstring JNICALL
 Java_nicolas_guillot_hellocpp_core_HelloLib_sayHello__JLjava_lang_String_2(JNIEnv *env, jclass type,

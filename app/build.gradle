@@ -22,25 +22,16 @@ model {
             }
         }
 
-        ndk {
-            moduleName = "HelloLib"
-            toolchain = "clang"
-            toolchainVersion = "3.5"
-            stl = "c++_shared"
-
-            ldLibs.add("atomic")
-            ldLibs.add("android")
-            ldLibs.add("log")
-
-            abiFilters.addAll(["arm64-v8a"]) //["armeabi", "armeabi-v7a", "x86", "arm64-v8a"]) //filtering ABIs to reduce the compile time
-        }
-
         sources.main {
             jni {
-                source {
-                    srcDirs "../nativelibrary/src/main/jni"
+                dependencies {
+                    project ':nativelibrary'
                 }
             }
+        }
+
+        ndk {
+            moduleName = "FakeLib"
         }
     }
 }
